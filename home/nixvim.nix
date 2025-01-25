@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
   programs.nixvim = {
@@ -6,6 +6,8 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+
+    colorschemes.catppuccin.enable = true;
 
     luaLoader.enable = true;
      
@@ -22,7 +24,6 @@
           clangd.enable = true;
         };
       };
-      lspconfig.enable = true;      
       vim-be-good.enable = true;
     };
 

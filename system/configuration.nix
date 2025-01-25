@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, pkgs-5a83f6f98, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
@@ -87,7 +87,8 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.eviltrtl = {
-    isNormalUser = true;
+	shell = pkgs.zsh; # Change shell to zsh
+	isNormalUser = true;
     description = "Leon Andorfi";
     extraGroups = [ "networkmanager" "wheel" ];
   };
@@ -116,14 +117,14 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [ 
      brave
-     libsForQt5.qt5.qtquickcontrols2
-     libsForQt5.qt5.qtgraphicaleffects
-     libsForQt5.qt5.qtsvg
+     qt6Packages.qtbase #libsForQt5.qt5.qtbase
+     qt6Packages.qtmultimedia #libsForQt5.qt5.qtmultimedia
+     #libsForQt5.qt5.qtquickcontrols2
+     #libsForQt5.qt5.qtgraphicaleffects
+     #libsForQt5.qt5.qtsvg
      noto-fonts-cjk-sans  # Japanese Fonts
      noto-fonts-cjk-serif
-  ] ++ (with pkgs-5a83f6f98; [
-     libsForQt5.qt5.qtmultimedia
-  ]);
+  ];
 
   programs.steam = {
     enable = true;
@@ -131,6 +132,8 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
+
+  programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
