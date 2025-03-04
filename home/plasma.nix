@@ -1,4 +1,10 @@
 { pkgs, ... }:
+
+let wallpaperDer = pkgs.fetchurl {
+                  url = "https://raw.githubusercontent.com/qbarone/spacedots/refs/heads/main/pianoouterspace.png";
+                  hash = "sha256-pJNaFTEJNw2C8G2c9woueQguMoLWIZ4EFzqH+IIOYTw="; 
+                };
+in
 {
   programs = { 
     plasma = {
@@ -8,13 +14,14 @@
 		colorScheme = "CatppuccinFrappeBlue";
 		splashScreen.theme = "None";
         iconTheme = "Papirus-Dark";
-		wallpaper = pkgs.fetchurl {
-		  url = "https://raw.githubusercontent.com/qbarone/spacedots/refs/heads/main/pianoouterspace.png";
-		  hash = "sha256-pJNaFTEJNw2C8G2c9woueQguMoLWIZ4EFzqH+IIOYTw="; 
-		};
+		wallpaper = wallpaperDer;
       };
-    };
 
+	  kscreenlocker = {
+	    appearance.wallpaper = wallpaperDer;
+	  };
+    };
+	
 	konsole = {
 	  enable = true;
 	  

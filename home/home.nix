@@ -15,14 +15,27 @@
       update = "sudo nixos-rebuild switch";
     };
 
-	initExtra = "pfetch";
+    initExtra = "pfetch";
   };
 
   home.packages = with pkgs; [
     git
-	pfetch-rs
+	ripgrep     # Nixvim Telescope Dependency
+    pfetch-rs
 	fira-code
 	papirus-icon-theme
     catppuccin-kde
+    discord
+    todoist-electron
+    clapper # Video Player
+    anki
+    jq
   ];
+
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };
+  };
 }
