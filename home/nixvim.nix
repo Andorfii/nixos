@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
 
   programs.nixvim = {
@@ -42,16 +42,6 @@
 	    mode = "n";
 	  }
       {
-		action = ":w <CR> :below terminal g++ % -o %< && %< <CR>";
-	    key = "<F8>"; 
-		mode = "n";
-	  }
-      {
-		action = ":w <CR> :below terminal g++ % -o %< && %< \< %:p:h/input <CR>";
-	    key = "<F9>"; 
-		mode = "n";
-	  }
-      {
 		action = ":below terminal nix develop <CR> 20<C-w>_ i"; 
 	    key = "<leader>t"; 
 		mode = "n";
@@ -59,6 +49,36 @@
       {
 		action = ":below terminal zsh <CR> 20<C-w>_ i"; 
 	    key = "<leader>T"; 
+		mode = "n";
+	  }
+      {
+		action = ":DapTerminate<CR>"; 
+	    key = "<F4>"; 
+		mode = "n";
+	  }
+      {
+		action = ":DapContinue<CR>"; 
+	    key = "<F5>"; 
+		mode = "n";
+	  }
+      {
+		action = ":DapStepOver<CR>";
+	    key = "<F10>"; 
+		mode = "n";
+	  }
+      {
+		action = ":DapStepInto<CR>"; 
+	    key = "<F11>"; 
+		mode = "n";
+	  }
+      {
+		action = ":DapStepOut<CR>"; 
+	    key = "<F12>"; 
+		mode = "n";
+	  }
+      {
+		action = ":DapToggleBreakpoint<CR>"; 
+	    key = "<leader>b"; 
 		mode = "n";
 	  }
 	];
@@ -99,7 +119,7 @@
 	  # C/C++
 #          clangd.enable = true;
       # Java
-           java_language_server.enable = true;
+          jdtls.enable = true;
         };
       };
       
@@ -112,7 +132,19 @@
         ];
       };
 
-      vim-be-good.enable = true;
+      dap = {
+        enable = true;
+        extensions.dap-ui.enable = true;
+        configurations = {
+          java = [
+            {
+              type = "java";
+              request = "launch";
+              name = "Debug (Attach)";
+            }
+          ];
+        };
+      };
     };
 
     opts = {

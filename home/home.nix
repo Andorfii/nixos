@@ -15,7 +15,7 @@
       update = "sudo nixos-rebuild switch";
     };
 
-    initExtra = "pfetch";
+    initExtra = "pfetch\n bindkey -e";
   };
 
   home.packages = with pkgs; [
@@ -30,7 +30,14 @@
     clapper # Video Player
     anki
     jq
+    jdk
   ];
+
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+    ];
+  };
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {

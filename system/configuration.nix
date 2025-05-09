@@ -13,17 +13,6 @@
       efi.canTouchEfiVariables = true;
     };
 
-    plymouth = {
-      enable = true;
-      theme = "lone";
-      themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "lone" ];
-        })
-      ];
-    };
-
     # Enable "Silent Boot"
     consoleLogLevel = 0;
     initrd.verbose = false;
@@ -93,7 +82,6 @@
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -171,7 +159,11 @@
   virtualisation = {
     libvirtd = {
       enable = true;
-      onBoot = "start";
+      onBoot = "ignore";
+      onShutdown = "shutdown";
+
+      qemu.ovmf.enable = true;
+      qemu.swtpm.enable = true;
     };
     spiceUSBRedirection.enable = true;
   };
