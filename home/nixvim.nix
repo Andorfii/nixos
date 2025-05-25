@@ -134,7 +134,6 @@
 
       dap = {
         enable = true;
-        extensions.dap-ui.enable = true;
         configurations = {
           java = [
             {
@@ -145,6 +144,8 @@
           ];
         };
       };
+
+      dap-ui.enable = true;
     };
 
     opts = {

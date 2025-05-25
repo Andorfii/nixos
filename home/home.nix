@@ -15,7 +15,7 @@
       update = "sudo nixos-rebuild switch";
     };
 
-    initExtra = "pfetch\n bindkey -e";
+    initContent = "pfetch\n bindkey -e";
   };
 
   home.packages = with pkgs; [
@@ -35,7 +35,7 @@
 
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
     ];
   };
 
