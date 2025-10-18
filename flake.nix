@@ -5,12 +5,6 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    # Nix-ld
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,17 +23,12 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, nix-ld, home-manager, plasma-manager, nixvim, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, plasma-manager, nixvim, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./system
-          nix-ld.nixosModules.nix-ld
-          { 
-            programs.nix-ld.enable = true; 
-            programs.nix-ld.dev.enable = false; 
-          }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

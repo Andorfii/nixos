@@ -80,8 +80,9 @@
   };
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
+  services.xserver = {
+    xkb.layout = "us";
+    xkb.options = "grp:win_space_toggle";
   };
 
   # Enable CUPS to print documents.
@@ -134,6 +135,9 @@
     settings.auto-optimise-store = true;
   };
 
+  # VPN
+  # services.tailscale.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [ 
@@ -142,8 +146,24 @@
      qt6Packages.qtbase #libsForQt5.qt5.qtbase
      qt6Packages.qtmultimedia #libsForQt5.qt5.qtmultimedia
      kdePackages.kcalc
-     noto-fonts-cjk-sans  # Japanese Fonts
-     noto-fonts-cjk-serif
+     kdePackages.kclock
+     kdePackages.kdenlive
+  ];
+
+  # Enable nix ld
+  programs.nix-ld.enable = true;
+  # Sets up all the libraries to load
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc
+    zlib
+    #fuse3
+    #icu
+    #nss
+    openssl
+    gmp
+    #curl
+    #expat
+    # ...
   ];
 
   programs.steam = {
@@ -164,6 +184,7 @@
 
       qemu.ovmf.enable = true;
       qemu.swtpm.enable = true;
+      qemu.vhostUserPackages = [ pkgs.virtiofsd ];
     };
     spiceUSBRedirection.enable = true;
   };

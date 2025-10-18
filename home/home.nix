@@ -15,10 +15,11 @@
       update = "sudo nixos-rebuild switch";
     };
 
-    initContent = "pfetch\n bindkey -e";
+    initContent = "pfetch\n bindkey -e\nbindkey \"^[[1;5C\" forward-word\nbindkey \"^[[1;5D\" backward-word";
   };
 
   home.packages = with pkgs; [
+    firefox
     git
 	ripgrep     # Nixvim Telescope Dependency
     pfetch-rs
@@ -31,11 +32,29 @@
     anki
     jq
     jdk
+    prismlauncher
+    qbittorrent
+    libreoffice-qt
+    # Japanese Fonts
+    noto-fonts-cjk-sans 
+    noto-fonts-cjk-serif
+    # Haskell
+    cabal-install
+    ghc
+    stack
+    # Prolog
+    swi-prolog
+    # C/C++
+    gcc
+    # Python
+    python314
   ];
 
   programs.vscode = {
     enable = true;
     profiles.default.extensions = with pkgs.vscode-extensions; [
+        vscjava.vscode-spring-initializr
+        ms-python.python
     ];
   };
 
